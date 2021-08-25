@@ -15,6 +15,11 @@ Category.hasMany(Product, {
 });
 
 // Products belongToMany Tags (through ProductTag)
+Product.belongsToMany(Tag, {
+  through: {
+    model: 'product_tag',
+  }
+});
 
 // Tags belongToMany Products (through ProductTag)
 
