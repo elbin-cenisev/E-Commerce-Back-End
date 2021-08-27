@@ -9,10 +9,10 @@ router.get('/', async (req, res) => {
   try {
     const TagData = await Tag.findAll({
       include: [
-        { 
+        {
           model: Product,
           // Line below added to prevent duplicate rows
-          through: {attributes:["id", "product_id", "tag_id"]}
+          through: { attributes: ["id", "product_id", "tag_id"] }
         }
       ],
     });
@@ -27,11 +27,11 @@ router.get('/:id', async (req, res) => {
   // be sure to include its associated Product data
   try {
     const TagData = await Tag.findByPk(req.params.id, {
-      include: [ 
+      include: [
         {
           model: Product,
           // Line below added to prevent duplicate rows
-          through: {attributes:["id", "product_id", "tag_id"]}
+          through: { attributes: ["id", "product_id", "tag_id"] }
         }
       ],
     });
@@ -47,8 +47,14 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   // create a new tag
+  try {
+    const tagData = await Tag.create(req.body);
+    res.status(200).json(tagData);
+  } catch (err) {
+    res.status(400).json(err);
+  }
 });
 
 router.put('/:id', (req, res) => {
