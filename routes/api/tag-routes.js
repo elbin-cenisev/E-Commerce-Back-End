@@ -57,8 +57,25 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', async (req, res) => {
   // update a tag's name by its `id` value
+  Tag.update(
+    {
+      // All the fields you can update and the data attached to the request body.
+      tag_name: req.body.tag_name,
+    },
+    {
+      // Gets the books based on the isbn given in the request parameters
+      where: {
+        id: req.params.id,
+      },
+    }
+  )
+    .then((updatedTag) => {
+      // Sends the updated Tag as a json response
+      res.json(updatedTag);
+    })
+    .catch((err) => res.json(err));
 });
 
 router.delete('/:id', (req, res) => {
