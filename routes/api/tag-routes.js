@@ -8,7 +8,13 @@ router.get('/', async (req, res) => {
   // be sure to include its associated Product data
   try {
     const TagData = await Tag.findAll({
-      include: [{ model: Product }],
+      include: [
+        { 
+          model: Product,
+          // Line below added to prevent duplicate rows
+          through: {attributes:["id", "product_id", "tag_id"]}
+        }
+      ],
     });
     res.status(200).json(TagData);
   } catch (err) {
@@ -21,7 +27,13 @@ router.get('/:id', async (req, res) => {
   // be sure to include its associated Product data
   try {
     const TagData = await Tag.findByPk(req.params.id, {
-      include: [{ model: Product }],
+      include: [ 
+        {
+          model: Product,
+          // Line below added to prevent duplicate rows
+          through: {attributes:["id", "product_id", "tag_id"]}
+        }
+      ],
     });
 
     if (!TagData) {
