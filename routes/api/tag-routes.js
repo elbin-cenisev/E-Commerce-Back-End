@@ -65,7 +65,7 @@ router.put('/:id', async (req, res) => {
       tag_name: req.body.tag_name,
     },
     {
-      // Gets the books based on the isbn given in the request parameters
+      // Gets the tag based on the id given in the request parameters
       where: {
         id: req.params.id,
       },
